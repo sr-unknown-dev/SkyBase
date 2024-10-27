@@ -21,6 +21,6 @@ class SkyBaseCommand extends Command
         return;
 
         $player->getInventory()->addItem(VanillaItems::GOLDEN_HOE()->setCustomName("§3SkyBase Selector"));
-        $player->sendMessage("Has recibido una azada de oro. Usa clic izquierdo y derecho para seleccionar las posiciones.");
+        $player->sendMessage("§aUsa clic izquierdo y derecho para seleccionar las posiciones.");
     }
 }

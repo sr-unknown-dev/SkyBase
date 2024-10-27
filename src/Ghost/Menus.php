@@ -63,7 +63,7 @@ class Menus
             return $transaction->discard();
         });
 
-        $menu->send($player, "Select the wool color");
+        $menu->send($player, "§gSelect the wool color");
     }
 
     public function openGlassSelectionMenu(Player $player): void
@@ -104,6 +104,6 @@ class Menus
             return $transaction->discard();
         });
 
-        $menu->send($player, "Select the glass color");
+        $menu->send($player, "§gSelect the glass color");
     }
 }

@@ -45,10 +45,10 @@ class Loader extends PluginBase implements Listener
 
             if ($event->getAction() === PlayerInteractEvent::LEFT_CLICK_BLOCK) {
                 $this->positions[$player->getName()]['pos1'] = $position;
-                $player->sendMessage("Posición 1 seleccionada: " . $position->__toString());
+                $player->sendMessage("§gFirst position placed");
             } elseif ($event->getAction() === PlayerInteractEvent::RIGHT_CLICK_BLOCK) {
                 $this->positions[$player->getName()]['pos2'] = $position;
-                $player->sendMessage("Posición 2 seleccionada: " . $position->__toString());
+                $player->sendMessage("§gSecond position placed");
 
                 if (isset($this->positions[$player->getName()]['pos1'])) {
                     $pos1 = $this->positions[$player->getName()]['pos1'];
@@ -58,7 +58,7 @@ class Loader extends PluginBase implements Listener
                     $sizeZ = abs($pos1->getZ() - $pos2->getZ()) + 1;
 
                     if ($sizeX > 50 || $sizeZ > 50) {
-                        $player->sendMessage("No se pudo crear la SkyBase porque la selección es mayor a 50 bloques.");
+                        $player->sendMessage("§cNo se pudo crear la SkyBase porque la selección es mayor a 50 bloques.");
                         return;
                     }
 
