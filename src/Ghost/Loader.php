@@ -45,10 +45,10 @@ class Loader extends PluginBase implements Listener
 
             if ($event->getAction() === PlayerInteractEvent::LEFT_CLICK_BLOCK) {
                 $this->positions[$player->getName()]['pos1'] = $position;
-                $player->sendMessage("§gFirst position placed");
+                $player->sendMessage("§aFirst position placed");
             } elseif ($event->getAction() === PlayerInteractEvent::RIGHT_CLICK_BLOCK) {
                 $this->positions[$player->getName()]['pos2'] = $position;
-                $player->sendMessage("§gSecond position placed");
+                $player->sendMessage("§aSecond position placed");
 
                 if (isset($this->positions[$player->getName()]['pos1'])) {
                     $pos1 = $this->positions[$player->getName()]['pos1'];
@@ -70,6 +70,11 @@ class Loader extends PluginBase implements Listener
 
     public function runSkyBase(Player $player): void
     {
+        if (!isset($this->positions[$player->getName()]['pos1']) || !isset($this->positions[$player->getName()]['pos2'])) {
+            $player->sendMessage("§cNo se pudo crear la SkyBase porque las posiciones no están definidas.");
+            return;
+        }
+
         SkyBase::run(
             $player->getWorld(),
             $this->positions[$player->getName()]['pos1'],
@@ -77,6 +82,6 @@ class Loader extends PluginBase implements Listener
             $this->menus->getWoolColor(),
             $this->menus->getGlassColor()
         );
-        $player->sendMessage("SkyBase creada.");
+        $player->sendMessage("§aSkyBase creada.");
     }
 }
