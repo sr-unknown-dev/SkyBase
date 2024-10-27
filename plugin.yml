@@ -1,0 +1,10 @@
+name: SkyBase
+author: Ghost
+version: 0.01
+api: 5.0.0
+main: Ghost\Loader
+
+permissions:
+  skybase.command:
+    description: Allows the player to use the /skybase command
+    default: true
