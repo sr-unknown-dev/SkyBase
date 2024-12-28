@@ -1,8 +1,8 @@
 name: SkyBase
-author: Ghost
+author: Sr.Idk
 version: 0.01
 api: 5.0.0
-main: Ghost\Loader
+main: Idk\Loader
 
 permissions:
   skybase.command:
