@@ -1,8 +1,8 @@
 <?php
 
-namespace Ghost;
+namespace Idk;
 
-use Ghost\Command\SkyBaseCommand;
+use Idk\Command\SkyBaseCommand;
 use muqsit\invmenu\InvMenuHandler;
 use pocketmine\plugin\PluginBase;
 use pocketmine\command\Command;

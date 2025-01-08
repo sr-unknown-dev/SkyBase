@@ -1,6 +1,6 @@
 <?php
 
-namespace Ghost;
+namespace Idk;
 
 use muqsit\invmenu\InvMenu;
 use muqsit\invmenu\transaction\InvMenuTransactionResult;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ghost;
+namespace Idk;
 
 use pocketmine\world\World;
 use pocketmine\math\Vector3;
