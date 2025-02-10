@@ -61,9 +61,11 @@ class Loader extends PluginBase implements Listener
                         $player->sendMessage("§cNo se pudo crear la SkyBase porque la selección es mayor a 50 bloques.");
                         return;
                     }
-
-                    $this->menus->openColorSelectionMenu($player);
                 }
+            }
+
+            if (isset($this->positions[$player->getName()]['pos1']) && isset($this->positions[$player->getName()]['pos2'])) {
+                $this->menus->openColorSelectionMenu($player);
             }
         }
     }

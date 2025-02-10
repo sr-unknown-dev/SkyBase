@@ -14,7 +14,7 @@ class SkyBase
 {
     public static int $height = 100;
 
-    public static function run(World $world, Vector3 $pos1, Vector3 $pos2, string $woolColor, string $glassColor): void{
+    public static function run(World $world, Vector3 $pos1, Vector3 $pos2, string $woolColor, string $glassColor): void {
         $minX = min($pos1->getX(), $pos2->getX());
         $maxX = max($pos1->getX(), $pos2->getX());
         $minZ = min($pos1->getZ(), $pos2->getZ());
@@ -30,13 +30,15 @@ class SkyBase
         $woolBlock = VanillaBlocks::WOOL()->setColor($dyeWoolColor);
         $glassBlock = VanillaBlocks::STAINED_GLASS()->setColor($dyeGlassColor);
 
+        // Create the skybase platform
         for ($x = $minX; $x <= $maxX; $x++) {
             for ($z = $minZ; $z <= $maxZ; $z++) {
                 $world->setBlock(new Vector3($x, $minY, $z), $woolBlock);
                 $world->setBlock(new Vector3($x, $maxY, $z), $woolBlock);
             }
         }
-        
+
+        // Create the walls of the skybase
         for ($y = $minY + 1; $y < $maxY; $y++) {
             for ($x = $minX; $x <= $maxX; $x++) {
                 $world->setBlock(new Vector3($x, $y, $minZ), $glassBlock);
@@ -48,21 +50,22 @@ class SkyBase
             }
         }
 
-        for ($y = $minY; $y >= 0; $y--) {
-            $pillarBlock = $woolBlock;
+        // Create the pillar down to the first solid block
+        for ($y = $minY - 1; $y >= 0; $y--) {
+            $currentBlock = $world->getBlock(new Vector3($center->x, $y, $center->z));
+            if (!$currentBlock instanceof Air) {
+                // Stop the pillar at the first non-air block
+                $pillarBlock = VanillaBlocks::OAK_WALL_SIGN();
+                $world->setBlock(new Vector3($center->x, $y, $center->z), $pillarBlock);
 
-            if ($y == 0) {
-                $pillarBlock = VanillaBlocks::CARTE();
-                $world->setBlock($center->down(), $pillarBlock);
-
-                $tile = $world->getTile($center->down());
+                $tile = $world->getTile(new Vector3($center->x, $y, $center->z));
                 if ($tile instanceof Sign) {
                     $tile->setText(new SignText([TextFormat::colorize("&e[Elevator]"), TextFormat::colorize("&7up")]));
-                }                
+                }
                 break;
             }
 
-            $world->setBlock(new Vector3($center->x, $y, $center->z), $pillarBlock);
+            $world->setBlock(new Vector3($center->x, $y, $center->z), $woolBlock);
         }
     }
 }
