@@ -51,14 +51,23 @@ class SkyBase
         for ($y = $minY - 1; $y >= 0; $y--) {
             $currentBlock = $world->getBlock(new Vector3($center->x, $y, $center->z));
             if (!$currentBlock instanceof Air) {
-                // Detener el pilar en el primer bloque que no es aire y colocar el cartel un bloque por encima
+                // Colocar el cartel en la parte inferior
                 $pillarBlock = VanillaBlocks::OAK_SIGN();
                 $world->setBlock(new Vector3($center->x, $y + 1, $center->z), $pillarBlock);
 
-                // Establecer el texto del cartel
+                // Establecer el texto del cartel en la parte inferior
                 $tile = $world->getTile(new Vector3($center->x, $y + 1, $center->z));
                 if ($tile instanceof Sign) {
                     $tile->setText(new SignText([TextFormat::colorize("&e[Elevator]"), TextFormat::colorize("&7up")]));
+                }
+
+                // Colocar el cartel en la parte superior del pilar
+                $world->setBlock(new Vector3($center->x, $y + 2, $center->z), $pillarBlock);
+
+                // Establecer el texto del cartel en la parte superior
+                $tileTop = $world->getTile(new Vector3($center->x, $y + 2, $center->z));
+                if ($tileTop instanceof Sign) {
+                    $tileTop->setText(new SignText([TextFormat::colorize("&e[Elevator]"), TextFormat::colorize("&7down")]));
                 }
                 break;
             }
