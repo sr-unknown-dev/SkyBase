@@ -49,23 +49,23 @@ class Loader extends PluginBase implements Listener
             } elseif ($event->getAction() === PlayerInteractEvent::RIGHT_CLICK_BLOCK) {
                 $this->positions[$player->getName()]['pos2'] = $position;
                 $player->sendMessage("§aSecond position placed");
-
-                if (isset($this->positions[$player->getName()]['pos1'])) {
-                    $pos1 = $this->positions[$player->getName()]['pos1'];
-                    $pos2 = $this->positions[$player->getName()]['pos2'];
-
-                    $sizeX = abs($pos1->getX() - $pos2->getX()) + 1;
-                    $sizeZ = abs($pos1->getZ() - $pos2->getZ()) + 1;
-
-                    if ($sizeX > 50 || $sizeZ > 50) {
-                        $player->sendMessage("§cNo se pudo crear la SkyBase porque la selección es mayor a 50 bloques.");
-                        return;
-                    }
-                }
             }
 
             if (isset($this->positions[$player->getName()]['pos1']) && isset($this->positions[$player->getName()]['pos2'])) {
-                $this->menus->openColorSelectionMenu($player);
+                $pos1 = $this->positions[$player->getName()]['pos1'];
+                $pos2 = $this->positions[$player->getName()]['pos2'];
+
+                $sizeX = abs($pos1->getX() - $pos2->getX()) + 1;
+                $sizeZ = abs($pos1->getZ() - $pos2->getZ()) + 1;
+
+                if ($sizeX > 50 || $sizeZ > 50) {
+                    $player->sendMessage("§cNo se pudo crear la SkyBase porque la selección es mayor a 50 bloques.");
+                    return;
+                }
+                
+                if (isset($this->positions[$player->getName()]['pos1']) && isset($this->positions[$player->getName()]['pos2']) || isset($this->positions[$player->getName()]['pos2']) && isset($this->positions[$player->getName()]['pos1'])) {
+                    $this->runSkyBase($player);
+                }
             }
         }
     }

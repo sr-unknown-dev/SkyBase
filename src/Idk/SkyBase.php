@@ -27,7 +27,6 @@ class SkyBase
         $woolBlock = VanillaBlocks::WOOL()->setColor($dyeWoolColor);
         $glassBlock = VanillaBlocks::STAINED_GLASS()->setColor($dyeGlassColor);
 
-        // Crear la plataforma de la skybase
         for ($x = $minX; $x <= $maxX; $x++) {
             for ($z = $minZ; $z <= $maxZ; $z++) {
                 $world->setBlock(new Vector3($x, $minY, $z), $woolBlock);
@@ -35,7 +34,6 @@ class SkyBase
             }
         }
 
-        // Crear las paredes de la skybase
         for ($y = $minY + 1; $y < $maxY; $y++) {
             for ($x = $minX; $x <= $maxX; $x++) {
                 $world->setBlock(new Vector3($x, $y, $minZ), $glassBlock);
@@ -47,24 +45,19 @@ class SkyBase
             }
         }
 
-        // Crear el pilar hacia abajo hasta el primer bloque sólido
         for ($y = $minY - 1; $y >= 0; $y--) {
             $currentBlock = $world->getBlock(new Vector3($center->x, $y, $center->z));
             if (!$currentBlock instanceof Air) {
-                // Colocar el cartel en la parte inferior
                 $pillarBlock = VanillaBlocks::OAK_SIGN();
                 $world->setBlock(new Vector3($center->x, $y + 1, $center->z), $pillarBlock);
 
-                // Establecer el texto del cartel en la parte inferior
                 $tile = $world->getTile(new Vector3($center->x, $y + 1, $center->z));
                 if ($tile instanceof Sign) {
                     $tile->setText(new SignText([TextFormat::colorize("&e[Elevator]"), TextFormat::colorize("&7up")]));
                 }
 
-                // Colocar el cartel en la parte superior del pilar
                 $world->setBlock(new Vector3($center->x, $y + 2, $center->z), $pillarBlock);
 
-                // Establecer el texto del cartel en la parte superior
                 $tileTop = $world->getTile(new Vector3($center->x, $y + 2, $center->z));
                 if ($tileTop instanceof Sign) {
                     $tileTop->setText(new SignText([TextFormat::colorize("&e[Elevator]"), TextFormat::colorize("&7down")]));
