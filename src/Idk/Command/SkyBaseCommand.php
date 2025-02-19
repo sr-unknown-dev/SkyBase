@@ -8,6 +8,7 @@ use pocketmine\item\VanillaItems;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 use hcf\Loader;
+use hcf\utils\time\Timer;
 
 class SkyBaseCommand extends Command
 {
@@ -27,8 +28,7 @@ class SkyBaseCommand extends Command
         $cooldown = $session->getCooldown("skybase.cooldown");
 
         if ($cooldown !== null) {
-            // Assuming getTimeRemaining() returns a string representation of the cooldown time
-            $cooldownTime = $cooldown->getTimeRemaining();
+            $cooldownTime = Timer::convert($cooldown);
             $player->sendMessage(TextFormat::RED . "You have cooldown of: " . TextFormat::WHITE . $cooldownTime);
         } else {
             $player->getInventory()->addItem(VanillaItems::GOLDEN_HOE()->setCustomName("§3SkyBase Selector"));
