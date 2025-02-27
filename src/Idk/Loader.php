@@ -40,7 +40,7 @@ class Loader extends PluginBase implements Listener
         $player = $event->getPlayer();
         $item = $event->getItem();
 
-        if ($item->getCustomName() === "§3SkyBase Selector") {
+        if ($item->getNamedTag()->getTag("") && $item->getNamedTag()->getString("Airdrop_Item") === "Airdrop") {
             $position = $event->getBlock()->getPosition();
 
             if ($event->getAction() === PlayerInteractEvent::LEFT_CLICK_BLOCK) {

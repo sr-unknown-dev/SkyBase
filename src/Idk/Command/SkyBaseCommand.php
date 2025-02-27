@@ -5,9 +5,10 @@ namespace Idk\Command;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\item\VanillaItems;
-use pocketmine\player\Player;
+use hcf\player\Player;
 use pocketmine\utils\TextFormat;
 use hcf\Loader;
+use hcf\utils\time\Timer;
 
 class SkyBaseCommand extends Command
 {
@@ -23,15 +24,15 @@ class SkyBaseCommand extends Command
             return;
         }
 
-        $session = Loader::getInstance()->getSessionManager()->getSession($player->getXuid());
+        $session = Loader::getInstance()->getSessionManager()->getSession($player->getName());
         $cooldown = $session->getCooldown("skybase.cooldown");
 
         if ($cooldown !== null) {
-            // Assuming getTimeRemaining() returns a string representation of the cooldown time
-            $cooldownTime = $cooldown->getTimeRemaining();
-            $player->sendMessage(TextFormat::RED . "You have cooldown of: " . TextFormat::WHITE . $cooldownTime);
+            $player->sendMessage(TextFormat::RED . "You have cooldown of: " . TextFormat::WHITE . Timer::convert((int)$session->getCooldown("skybase.cooldown")));
         } else {
-            $player->getInventory()->addItem(VanillaItems::GOLDEN_HOE()->setCustomName("§3SkyBase Selector"));
+            $selector = VanillaItems::GOLDEN_HOE()->setCustomName("§3SkyBase Selector");
+            $selector->getNamedTag()->setString("skybase", "selector");
+            $player->getInventory()->addItem($selector);
             $player->sendMessage("§aUsa clic izquierdo y derecho para seleccionar las posiciones.");
             $session->addCooldown('skybase.cooldown', '', 60, false, false);
         }
