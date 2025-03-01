@@ -55,6 +55,13 @@ class SkyBase
                 if ($tile instanceof Sign) {
                     $tile->setText(new SignText([TextFormat::colorize("&e[Elevator]"), TextFormat::colorize("&7up")]));
                 }
+
+                $world->setBlock(new Vector3($center->x, $y + 2, $center->z), $pillarBlock);
+
+                $tileTop = $world->getTile(new Vector3($center->x, $y + 2, $center->z));
+                if ($tileTop instanceof Sign) {
+                    $tileTop->setText(new SignText([TextFormat::colorize("&e[Elevator]"), TextFormat::colorize("&7down")]));
+                }
                 break;
             }
             $world->setBlock(new Vector3($center->x, $y, $center->z), $woolBlock);
