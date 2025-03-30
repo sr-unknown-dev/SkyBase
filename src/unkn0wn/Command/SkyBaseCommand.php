@@ -1,6 +1,6 @@
 <?php
 
-namespace Idk\Command;
+namespace unkn0wn\Command;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
